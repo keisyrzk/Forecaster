@@ -9,10 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        VStack {
-            SearchView(viewModel: SearchViewModel())
-        }
-        .padding()
+        SearchView(viewModel: SearchViewModel(repository: OpenMeteoCityRepository(), storeRepository: DefaultPersistentStoreRepository(store: DefaultPersistantStore())))
     }
 }
 
