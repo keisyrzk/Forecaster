@@ -12,7 +12,6 @@ struct SearchView: View {
     @State private var searchBarState: SearchBarState = .empty
 
     @FocusState private var isSearchFocused: Bool
-    @State private var selectedCities: [City] = []
     @State private var navigationPath: [City] = []
 
     init(viewModel: SearchViewModel) {
@@ -28,6 +27,7 @@ struct SearchView: View {
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
 
                 searchBar
+                    .disabled(!viewModel.canSearch)
             }
             .padding(16)
             .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -42,6 +42,9 @@ struct SearchView: View {
             .task(id: viewModel.trigger) {
                 await viewModel.search()
             }
+            .task {
+                await viewModel.loadCities()
+            }
         }
     }
 
@@ -51,11 +54,23 @@ struct SearchView: View {
             .foregroundStyle(.white)
             .padding(.top, 16)
     }
+    
+    private var retryLoadingCities: some View {
+        Button {
+            Task {
+                await viewModel.loadCities()
+            }
+        } label: {
+            Text("Retry loading cities")
+        }
+        .frame(width: 100, height: 40)
+        .clipShape(Capsule())
+    }
 
     private var savedCities: some View {
         ScrollView {
             LazyVStack(spacing: 14) {
-                ForEach(selectedCities) { city in
+                ForEach(viewModel.storedCities) { city in
                     Button {
                         openForecast(for: city)
                     } label: {
@@ -66,7 +81,7 @@ struct SearchView: View {
             }
         }
         .overlay {
-            if selectedCities.isEmpty {
+            if viewModel.storedCities.isEmpty {
                 ContentUnavailableView(
                     "No saved cities",
                     systemImage: "cloud.sun",
@@ -82,10 +97,13 @@ struct SearchView: View {
     @ViewBuilder
     private var content: some View {
         switch viewModel.state {
+        case .loadingCancelled:
+            retryLoadingCities
+            
         case .start:
             savedCities
 
-        case .loading:
+        case .initial, .loadingStore, .loadingSearch, .savingStore:
             LoadingStateView()
 
         case let .results(cities):
@@ -97,7 +115,12 @@ struct SearchView: View {
             EmptyStateView(text: viewModel.trigger.query)
 
         case let .failure(error):
-            FailureStateView(errorMessage: error.message)
+            switch error {
+            case .persistentStoreLoad:
+                retryLoadingCities
+            default:
+                FailureStateView(errorMessage: error.message)
+            }
         }
     }
 
@@ -128,10 +151,11 @@ struct SearchView: View {
     }
 
     private func selectCity(_ city: City) {
-        selectedCities.removeAll { $0.id == city.id }
-        selectedCities.insert(city, at: 0)
-
-        cancelSearch()
+        Task {
+            await viewModel.selectCity(city) {
+                cancelSearch()
+            }
+        }
     }
 
     private func openForecast(for city: City) {

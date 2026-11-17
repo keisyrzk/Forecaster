@@ -11,6 +11,8 @@ enum SearchFailure: Equatable {
     case noConnection
     case serverError
     case invalidData
+    case persistentStoreSave
+    case persistentStoreLoad
     case unknown
 
     var message: String {
@@ -21,6 +23,10 @@ enum SearchFailure: Equatable {
             "Unable to search cities right now. Please try again later."
         case .invalidData:
             "Unable to process the server response."
+        case .persistentStoreSave:
+            "Failed saving selected city."
+        case .persistentStoreLoad:
+            "Failed loading stored cities"
         case .unknown:
             "Something went wrong. Please try again."
         }
