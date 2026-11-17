@@ -9,6 +9,7 @@ import SwiftUI
 
 struct SearchView: View {
     @State private var viewModel: SearchViewModel
+    @State private var searchBarState: SearchBarState = .empty
 
     @FocusState private var isSearchFocused: Bool
     @State private var selectedCities: [City] = []
@@ -102,10 +103,7 @@ struct SearchView: View {
 
     private var searchBar: some View {
         SearchBarView(
-            text: Binding(
-                get: { viewModel.trigger.query },
-                set: { viewModel.updateQuery($0) }
-            ),
+            state: $searchBarState,
             onSearch: {
                 viewModel.submitSearch()
             },
@@ -113,9 +111,18 @@ struct SearchView: View {
                 cancelSearch()
             }
         )
+        .onChange(of: searchBarState) { _, state in
+            switch state {
+            case .valid(let text):
+                viewModel.updateQuery(text)
+            case .empty, .invalid:
+                viewModel.updateQuery("")
+            }
+        }
     }
 
     private func cancelSearch() {
+        searchBarState = .empty
         viewModel.updateQuery("")
         isSearchFocused = false
     }
