@@ -8,6 +8,12 @@
 import SwiftUI
 
 struct EmptyStateView: View {
+    @Environment(\.colorScheme) private var colorScheme
+
+    private var palette: AppPalette {
+        AppPalette(colorScheme: colorScheme)
+    }
+
     
     let text: String
     
@@ -15,5 +21,6 @@ struct EmptyStateView: View {
         ContentUnavailableView.search(
             text: text
         )
+        .foregroundStyle(palette.textPrimary, palette.textSecondary)
     }
 }

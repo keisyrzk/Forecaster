@@ -8,13 +8,19 @@
 import SwiftUI
 
 struct HourlyForecastCard: View {
+    @Environment(\.colorScheme) private var colorScheme
+
+    private var palette: AppPalette {
+        AppPalette(colorScheme: colorScheme)
+    }
+
     let hourlyForecast: [HourlyForecast]
 
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
             Label("Hourly forecast", systemImage: "clock")
                 .font(.caption.weight(.semibold))
-                .foregroundStyle(.white.opacity(0.7))
+                .foregroundStyle(palette.textSecondary)
             
             if hourlyForecast.isEmpty {
                 Text("Hourly forecast is unavailable.")
@@ -32,6 +38,6 @@ struct HourlyForecastCard: View {
         }
         .padding(18)
         .frame(maxWidth: .infinity, alignment: .leading)
-        .background(.black.opacity(0.2), in: RoundedRectangle(cornerRadius: 24))
+        .background(palette.forecastCardBackground, in: RoundedRectangle(cornerRadius: 24))
     }
 }

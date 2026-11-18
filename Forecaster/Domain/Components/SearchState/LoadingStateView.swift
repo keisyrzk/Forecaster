@@ -8,10 +8,16 @@
 import SwiftUI
 
 struct LoadingStateView: View {
+    @Environment(\.colorScheme) private var colorScheme
+
+    private var palette: AppPalette {
+        AppPalette(colorScheme: colorScheme)
+    }
+
     var body: some View {
         ProgressView("Searching...")
-            .tint(.white)
-            .foregroundStyle(.white)
+            .tint(palette.textPrimary)
+            .foregroundStyle(palette.textPrimary)
             .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 }

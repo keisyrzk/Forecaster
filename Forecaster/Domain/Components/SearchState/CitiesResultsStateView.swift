@@ -8,6 +8,12 @@
 import SwiftUI
 
 struct CitiesResultsStateView: View {
+    @Environment(\.colorScheme) private var colorScheme
+
+    private var palette: AppPalette {
+        AppPalette(colorScheme: colorScheme)
+    }
+
     
     let cities: [City]
     let selectCity: (City) -> Void
@@ -24,7 +30,7 @@ struct CitiesResultsStateView: View {
                     .buttonStyle(.plain)
 
                     Divider()
-                        .overlay(.white.opacity(0.1))
+                        .overlay(palette.resultsOverlay)
                 }
             }
         }

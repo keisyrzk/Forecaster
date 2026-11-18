@@ -8,6 +8,12 @@
 import SwiftUI
 
 struct FailureStateView: View {
+    @Environment(\.colorScheme) private var colorScheme
+
+    private var palette: AppPalette {
+        AppPalette(colorScheme: colorScheme)
+    }
+
     
     let errorMessage: String
     
@@ -17,5 +23,6 @@ struct FailureStateView: View {
             systemImage: "wifi.exclamationmark",
             description: Text(errorMessage)
         )
+        .foregroundStyle(palette.textPrimary, palette.textSecondary)
     }
 }

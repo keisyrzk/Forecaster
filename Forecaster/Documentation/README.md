@@ -61,7 +61,8 @@ Holds logic, prepares data for presentation by the View. It request repositories
 ## Resources
 
 Contains all app-specific resources:
-- resources-related helpers like `Color Hex` allowing providing colors with hex identifiers.
+- `Color Palette` - gathers all colors used across the application. It defines color sets for both dark and light mode. The right color palette is selected based on the current `Color Scheme` (shared within application environment).
+- resources-related helpers like `Color Hex` allowing providing colors with hex identifiers and enlightment factor (make color lighter).
 - `Background View` - specifies a View designed to use as a background across the application
   - `Background Type` - lists all possible background types where each results in different UI. Its `color` variable specifies a set of colors used to create a gradient-based background fill.
   - `Background View` - takes background type as an input and build its body as a gradient fill using the given input's color set.

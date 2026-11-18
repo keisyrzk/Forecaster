@@ -8,6 +8,12 @@
 import SwiftUI
 
 struct CityTileView: View {
+    @Environment(\.colorScheme) private var colorScheme
+
+    private var palette: AppPalette {
+        AppPalette(colorScheme: colorScheme)
+    }
+
     let city: City
 
     var body: some View {
@@ -18,15 +24,15 @@ struct CityTileView: View {
 
                 Text(city.country)
                     .font(.subheadline)
-                    .foregroundStyle(.white.opacity(0.75))
+                    .foregroundStyle(palette.textSecondary)
             }
 
             Spacer()
 
             Image(systemName: "chevron.right")
-                .foregroundStyle(.white.opacity(0.6))
+                .foregroundStyle(palette.textSecondary)
         }
-        .foregroundStyle(.white)
+        .foregroundStyle(palette.textPrimary)
         .padding(20)
         .frame(maxWidth: .infinity, minHeight: 105)
         .background {

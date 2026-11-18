@@ -8,6 +8,12 @@
 import SwiftUI
 
 private struct AppOverlayModifier: ViewModifier {
+    @Environment(\.colorScheme) private var colorScheme
+
+    private var palette: AppPalette {
+        AppPalette(colorScheme: colorScheme)
+    }
+
     @Binding var overlay: AppOverlayType?
 
     func body(content: Content) -> some View {
@@ -18,7 +24,7 @@ private struct AppOverlayModifier: ViewModifier {
                     switch overlay {
                     case .loader:
                         ZStack {
-                            Color.black.opacity(0.5)
+                            palette.defaultBackground
                                 .ignoresSafeArea()
                             
                             AppLoader()

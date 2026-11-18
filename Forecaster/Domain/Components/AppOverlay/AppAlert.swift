@@ -8,12 +8,18 @@
 import SwiftUI
 
 struct AppAlert: View {
+    @Environment(\.colorScheme) private var colorScheme
+
+    private var palette: AppPalette {
+        AppPalette(colorScheme: colorScheme)
+    }
+
     let message: String
     let onDismiss: () -> Void
 
     var body: some View {
         ZStack {
-            Color.black.opacity(0.5)
+            palette.defaultBackground
                 .ignoresSafeArea()
 
             VStack(spacing: 24) {

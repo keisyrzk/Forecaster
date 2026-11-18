@@ -13,6 +13,12 @@ struct ForecastDestination: Hashable {
 }
 
 struct ForecastView: View {
+    @Environment(\.colorScheme) private var colorScheme
+
+    private var palette: AppPalette {
+        AppPalette(colorScheme: colorScheme)
+    }
+
     @State private var viewModel: ForecastViewModel
 
     init(weatherForecast: WeatherForecast, cityName: String = "") {
@@ -39,7 +45,7 @@ struct ForecastView: View {
             BackgroundView(type: .forecast(viewModel.weatherForecast.condition))
                 .ignoresSafeArea()
         }
-        .foregroundStyle(.white)
+        .foregroundStyle(palette.textPrimary)
         .toolbar(.visible, for: .navigationBar)
         .toolbarBackground(.hidden, for: .navigationBar)
         .navigationBarTitleDisplayMode(.inline)

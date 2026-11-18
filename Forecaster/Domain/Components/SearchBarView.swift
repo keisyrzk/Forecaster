@@ -8,6 +8,12 @@
 import SwiftUI
 
 struct SearchBarView: View {
+    @Environment(\.colorScheme) private var colorScheme
+
+    private var palette: AppPalette {
+        AppPalette(colorScheme: colorScheme)
+    }
+
     
     @Binding var state: SearchBarState
     let onSearch: () -> Void
@@ -40,7 +46,7 @@ struct SearchBarView: View {
                         isFocused = false
                         onCancel()
                     }
-                    .foregroundStyle(.white)
+                    .foregroundStyle(palette.textPrimary)
                     .transition(.opacity)
                 }
             }
@@ -57,7 +63,7 @@ struct SearchBarView: View {
     private var searchField: some View {
         HStack(spacing: 10) {
             Image(systemName: "magnifyingglass")
-                .foregroundStyle(.white.opacity(0.6))
+                .foregroundStyle(palette.textSecondary)
             
             searchTextField
             
@@ -67,7 +73,7 @@ struct SearchBarView: View {
         }
         .padding(14)
         .background(
-            Color.white.opacity(0.2),
+            palette.searchFieldBackground,
             in: RoundedRectangle(cornerRadius: 16)
         )
     }
@@ -77,10 +83,10 @@ struct SearchBarView: View {
             "",
             text: textBinding,
             prompt: Text("Search city")
-                .foregroundStyle(.white.opacity(0.5))
+                .foregroundStyle(palette.textSecondary)
         )
-        .foregroundStyle(.white)
-        .tint(.white)
+        .foregroundStyle(palette.textPrimary)
+        .tint(palette.textPrimary)
         .focused($isFocused)
         .textInputAutocapitalization(.words)
         .autocorrectionDisabled()
@@ -96,14 +102,14 @@ struct SearchBarView: View {
             state = .empty
         } label: {
             Image(systemName: "xmark.circle.fill")
-                .foregroundStyle(.white.opacity(0.5))
+                .foregroundStyle(palette.textSecondary)
         }
     }
     
     private var errorTextView: some View {
         Text("Use at least 3 characters: letters, spaces or \"-\"")
             .font(.caption)
-            .foregroundStyle(.white)
-            .shadow(color: .red, radius: 2)
+            .foregroundStyle(palette.textPrimary)
+            .shadow(color: palette.validationShadow, radius: 2)
     }
 }

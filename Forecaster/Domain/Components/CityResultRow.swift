@@ -8,6 +8,12 @@
 import SwiftUI
 
 struct CityResultRow: View {
+    @Environment(\.colorScheme) private var colorScheme
+
+    private var palette: AppPalette {
+        AppPalette(colorScheme: colorScheme)
+    }
+
     let city: City
 
     var body: some View {
@@ -15,7 +21,7 @@ struct CityResultRow: View {
             VStack(alignment: .leading, spacing: 4) {
                 Text(city.name)
                     .font(.headline)
-                    .foregroundStyle(.white)
+                    .foregroundStyle(palette.textPrimary)
 
                 Text(
                     [city.region, city.country]
@@ -23,7 +29,7 @@ struct CityResultRow: View {
                         .joined(separator: ", ")
                 )
                 .font(.subheadline)
-                .foregroundStyle(.white.opacity(0.6))
+                .foregroundStyle(palette.textSecondary)
             }
 
             Spacer()

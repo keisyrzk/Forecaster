@@ -8,13 +8,19 @@
 import SwiftUI
 
 struct HourlyForecastColumn: View {
+    @Environment(\.colorScheme) private var colorScheme
+
+    private var palette: AppPalette {
+        AppPalette(colorScheme: colorScheme)
+    }
+
     let hour: HourlyForecast
 
     var body: some View {
         VStack(spacing: 12) {
             Text(hour.date, format: .dateTime.weekday(.abbreviated))
                 .font(.caption2)
-                .foregroundStyle(.white.opacity(0.7))
+                .foregroundStyle(palette.textSecondary)
             
             Text(hour.date, format: .dateTime.hour())
                 .font(.subheadline.weight(.medium))
@@ -29,7 +35,7 @@ struct HourlyForecastColumn: View {
             
             Text(hour.precipitationProbability.map { "\($0)%" } ?? "—")
                 .font(.caption.weight(.semibold))
-                .foregroundStyle(.cyan)
+                .foregroundStyle(palette.forecastAccent)
         }
     }
 }

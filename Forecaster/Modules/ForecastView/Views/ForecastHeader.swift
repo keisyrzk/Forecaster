@@ -8,6 +8,12 @@
 import SwiftUI
 
 struct ForecastHeader: View {
+    @Environment(\.colorScheme) private var colorScheme
+
+    private var palette: AppPalette {
+        AppPalette(colorScheme: colorScheme)
+    }
+
     let cityName: String
     let temperature: Double
     let condition: WeatherCondition?
@@ -29,7 +35,7 @@ struct ForecastHeader: View {
             
             Text(condition?.forecastTitle ?? "Conditions unavailable")
                 .font(.title3.weight(.medium))
-                .foregroundStyle(.white.opacity(0.85))
+                .foregroundStyle(palette.textSecondary)
         }
         .multilineTextAlignment(.center)
         .frame(maxWidth: .infinity)

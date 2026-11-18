@@ -8,6 +8,12 @@
 import SwiftUI
 
 struct SearchView: View {
+    @Environment(\.colorScheme) private var colorScheme
+
+    private var palette: AppPalette {
+        AppPalette(colorScheme: colorScheme)
+    }
+
     @State private var viewModel: SearchViewModel
     @State private var searchBarState: SearchBarState = .empty
     
@@ -53,7 +59,7 @@ struct SearchView: View {
     private var header: some View {
         Text("Weather")
             .font(.system(size: 36, weight: .bold))
-            .foregroundStyle(.white)
+            .foregroundStyle(palette.textPrimary)
             .padding(.top, 16)
     }
     
@@ -65,6 +71,7 @@ struct SearchView: View {
         } label: {
             Text("Retry loading cities")
         }
+        .tint(palette.textPrimary)
         .frame(width: 100, height: 40)
         .clipShape(Capsule())
     }
@@ -91,7 +98,7 @@ struct SearchView: View {
                         "Search and select a city to add it here."
                     )
                 )
-                .foregroundStyle(.white)
+                .foregroundStyle(palette.textPrimary, palette.textSecondary)
             }
         }
     }
