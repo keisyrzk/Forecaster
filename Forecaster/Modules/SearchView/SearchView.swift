@@ -176,9 +176,14 @@ struct SearchView: View {
                 overlay = nil
                 navigationPath.append(ForecastDestination(cityName: city.name, forecast: forecast))
             } catch is CancellationError {
-                overlay = .alert(message: "Something went wrong while fething weather forecast. Please try again.")
+                overlay = nil
             } catch {
-                overlay = .alert(message: "Failed fetching weather forecast. Please try again.")
+                if let apiError = error as? APIError,
+                   apiError == .noConnection {
+                    overlay = .alert(message: "No internet connection. Check your connection and try again.")
+                } else {
+                    overlay = .alert(message: "Failed fetching weather forecast. Please try again.")
+                }
             }
         }
     }

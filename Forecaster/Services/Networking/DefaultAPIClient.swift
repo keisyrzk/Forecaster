@@ -15,9 +15,23 @@ struct DefaultAPIClient: APIClient {
     }
 
     func send<T: Decodable & Sendable>(_ request: URLRequest) async throws -> T {
-        let (data, response) = try await session.data(
-            for: request
-        )
+        let data: Data
+        let response: URLResponse
+
+        do {
+            (data, response) = try await session.data(for: request)
+        } catch let error as URLError {
+            switch error.code {
+            case .cancelled:
+                throw CancellationError()
+
+            case .notConnectedToInternet, .networkConnectionLost:
+                throw APIError.noConnection
+
+            default:
+                throw APIError.transportError
+            }
+        }
 
         guard let response = response as? HTTPURLResponse else {
             throw APIError.invalidResponse
