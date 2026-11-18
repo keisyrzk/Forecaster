@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		5BCB980930ADD1C20083F2FB /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 5BCB97BA30ADD1C20083F2FB /* README.md */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		5BAE9A5330AB18FA0023AC32 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -27,11 +31,40 @@
 		5BAE9A4530AB18F90023AC32 /* Forecaster.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Forecaster.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5BAE9A5230AB18FA0023AC32 /* ForecasterTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ForecasterTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5BAE9A5C30AB18FA0023AC32 /* ForecasterUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ForecasterUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		5BCB97BA30ADD1C20083F2FB /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		5BCB986F30ADD3C70083F2FB /* Exceptions for "Forecaster" folder in "Forecaster" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Screenshots/d1.jpg,
+				Screenshots/d2.jpg,
+				Screenshots/d3.jpg,
+				Screenshots/d4.jpg,
+				Screenshots/d5.jpg,
+				Screenshots/e1.jpg,
+				Screenshots/e2.jpg,
+				Screenshots/e3.jpg,
+				Screenshots/e4.jpg,
+				Screenshots/e5.jpg,
+				Screenshots/e6.jpg,
+				Screenshots/l1.jpg,
+				Screenshots/l2.jpg,
+				Screenshots/l3.jpg,
+				Screenshots/l4.jpg,
+				Screenshots/l5.jpg,
+			);
+			target = 5BAE9A4430AB18F90023AC32 /* Forecaster */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		5BAE9A4730AB18F90023AC32 /* Forecaster */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				5BCB986F30ADD3C70083F2FB /* Exceptions for "Forecaster" folder in "Forecaster" target */,
+			);
 			path = Forecaster;
 			sourceTree = "<group>";
 		};
@@ -75,6 +108,7 @@
 		5BAE9A3C30AB18F90023AC32 = {
 			isa = PBXGroup;
 			children = (
+				5BCB97BA30ADD1C20083F2FB /* README.md */,
 				5BAE9A4730AB18F90023AC32 /* Forecaster */,
 				5BAE9A5530AB18FA0023AC32 /* ForecasterTests */,
 				5BAE9A5F30AB18FA0023AC32 /* ForecasterUITests */,
@@ -212,6 +246,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5BCB980930ADD1C20083F2FB /* README.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

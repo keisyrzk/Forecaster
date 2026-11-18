@@ -53,6 +53,7 @@ struct SearchView: View {
                 await viewModel.loadCities()
             }
         }
+        .tint(palette.textPrimary)
         .appOverlay($overlay)
     }
     

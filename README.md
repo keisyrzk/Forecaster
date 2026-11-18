@@ -3,6 +3,40 @@
 The `Forecaster` has been build being inspired by Apple's `Weather` app.
 On the main view (Search View) the current Search State is presented (no data, loading, failure, search results). By inputting the text in search bar on the view's bottom an API call is made. The results are presented as a scrollable list. If a location is selected form the list - the search bar is cleared, a tile for the selected city is presented on the screen and the selection is stored in Persistent Store so the lsit is presented every time the app is launched.
 By selecting the city tile - navigation moves to the forecast view. There are presented all the fetched weather forecast information about the seelcted location.
+
+# Screenshots
+
+### Main screens
+
+<p align="center">
+  <img src="Forecaster/Screenshots/d1.jpg" width="220">
+  <img src="Forecaster/Screenshots/d2.jpg" width="220">
+  <img src="Forecaster/Screenshots/d3.jpg" width="220">
+</p>
+
+### Gallery
+
+<details>
+<summary>Gallery</summary>
+
+<p align="center">
+  <img src="Forecaster/Screenshots/l1.jpg" width="100">
+  <img src="Forecaster/Screenshots/l2.jpg" width="100">
+  <img src="Forecaster/Screenshots/l3.jpg" width="100">
+  <img src="Forecaster/Screenshots/d4.jpg" width="100">
+  <img src="Forecaster/Screenshots/d5.jpg" width="100">
+  <img src="Forecaster/Screenshots/l4.jpg" width="100">
+  <img src="Forecaster/Screenshots/l5.jpg" width="100">
+  <img src="Forecaster/Screenshots/e1.jpg" width="100">
+  <img src="Forecaster/Screenshots/e2.jpg" width="100">
+  <img src="Forecaster/Screenshots/e3.jpg" width="100">
+  <img src="Forecaster/Screenshots/e4.jpg" width="100">
+  <img src="Forecaster/Screenshots/e5.jpg" width="100">
+  <img src="Forecaster/Screenshots/e6.jpg" width="100">
+</p>
+
+</details>
+
 # Architecture
 
 ## Project Structure
