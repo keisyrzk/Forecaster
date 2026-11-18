@@ -8,10 +8,6 @@ By selecting the city tile - navigation moves to the forecast view. There are pr
 ## Project Structure
 
 Forecaster is organized into the following directories:
-
-- **`Dependency Injection`**  
-  Defines and manages dependencies that can be injected into and consumed by other components.
-
 - **`Domain`**  
   Contains domain-specific components, including reusable UI components, data models (entities), repository contracts, and business logic.
 
@@ -54,9 +50,6 @@ The project is build with multiple layers with individual role:
 
 - **`View Model`**
 Holds logic, prepares data for presentation by the View. It request repositories for data operations.
-
-- **Dependency injection**
-// to fulfill
 
 ## Resources
 

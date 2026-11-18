@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum APIError: Error, Sendable {
+enum APIError: Error, Equatable, Sendable {
     case invalidResponse
     case noConnection
     case httpError(statusCode: Int, reason: String?)
