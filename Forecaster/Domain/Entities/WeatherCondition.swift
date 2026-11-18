@@ -82,6 +82,52 @@ extension WeatherCondition {
             "cloud.hail.fill"
         }
     }
+    
+    var forecastTitle: String {
+        switch self {
+        case .clearSky:
+            "Clear sky"
+            
+        case .mainlyClear:
+            "Mostly clear"
+            
+        case .partlyCloudy:
+            "Partly cloudy"
+            
+        case .overcast:
+            "Overcast"
+            
+        case .fog, .depositingRimeFog:
+            "Fog"
+            
+        case .lightDrizzle, .moderateDrizzle, .denseDrizzle:
+            "Drizzle"
+            
+        case .lightFreezingDrizzle, .denseFreezingDrizzle:
+            "Freezing drizzle"
+            
+        case .slightRain, .moderateRain, .heavyRain:
+            "Rain"
+            
+        case .lightFreezingRain, .heavyFreezingRain:
+            "Freezing rain"
+            
+        case .slightSnowfall, .moderateSnowfall, .heavySnowfall, .snowGrains:
+            "Snow"
+            
+        case .slightRainShowers, .moderateRainShowers, .violentRainShowers:
+            "Rain showers"
+            
+        case .slightSnowShowers, .heavySnowShowers:
+            "Snow showers"
+            
+        case .thunderstorm, .heavyThunderstorm:
+            "Thunderstorm"
+            
+        case .thunderstormWithSlightHail, .thunderstormWithHeavyHail:
+            "Thunderstorm with hail"
+        }
+    }
 }
 
 extension WeatherCondition {

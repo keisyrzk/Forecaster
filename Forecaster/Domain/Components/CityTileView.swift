@@ -30,17 +30,8 @@ struct CityTileView: View {
         .padding(20)
         .frame(maxWidth: .infinity, minHeight: 105)
         .background {
-            RoundedRectangle(cornerRadius: 20)
-                .fill(
-                    LinearGradient(
-                        colors: [
-                            Color(red: 0.30, green: 0.43, blue: 0.61),
-                            Color(red: 0.17, green: 0.23, blue: 0.38)
-                        ],
-                        startPoint: .topLeading,
-                        endPoint: .bottomTrailing
-                    )
-                )
+            BackgroundView(type: .tile)
+                .cornerRadius(20)
         }
     }
 }

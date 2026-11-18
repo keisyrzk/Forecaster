@@ -7,7 +7,7 @@
 
 import Foundation
 
-nonisolated struct HourlyForecast: Identifiable, Sendable {
+nonisolated struct HourlyForecast: Hashable, Identifiable, Sendable {
     var id: Date { date }
 
     let date: Date

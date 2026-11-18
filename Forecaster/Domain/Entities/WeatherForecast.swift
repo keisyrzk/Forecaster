@@ -7,7 +7,7 @@
 
 import Foundation
 
-nonisolated struct WeatherForecast: Sendable {
+nonisolated struct WeatherForecast: Hashable, Sendable {
     let temperature: Double
     let cloudCover: Double
     let hourly: [HourlyForecast]

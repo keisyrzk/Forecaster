@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        SearchView(viewModel: SearchViewModel(repository: OpenMeteoCityRepository(), storeRepository: DefaultPersistentStoreRepository(store: DefaultPersistantStore())))
+        SearchView(viewModel: SearchViewModel(repository: OpenMeteoCityRepository(), storeRepository: DefaultPersistentStoreRepository(store: DefaultPersistantStore()), weatherRepository: OpenMeteoWeatherRepository()))
     }
 }
 

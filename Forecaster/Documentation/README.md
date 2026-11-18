@@ -58,6 +58,44 @@ Holds logic, prepares data for presentation by the View. It request repositories
 - **Dependency injection**
 // to fulfill
 
+## Resources
+
+Contains all app-specific resources:
+- resources-related helpers like `Color Hex` allowing providing colors with hex identifiers.
+- `Background View` - specifies a View designed to use as a background across the application
+  - `Background Type` - lists all possible background types where each results in different UI. Its `color` variable specifies a set of colors used to create a gradient-based background fill.
+  - `Background View` - takes background type as an input and build its body as a gradient fill using the given input's color set.
+## App overlay
+
+In order to present any View as an overlay to the given content the `App Overlay Modifier` is introduced. It disables the given content and presents the selected overlay view:
+- `App Alert` - designed to present an alert view with a given message and providing dismiss action completion handler
+- `App Loader` - simple progress view with a message
+
+### Usage
+The View of interest should contain an optional State to handle the overlay:
+```swift
+@State private var overlay: AppOverlayType?
+```
+
+Nextly, the container of the View must apply the overlay modifier so it can react and show/hide the overlay:
+```swift
+.appOverlay($overlay)
+```
+
+Now the setup is complete. The overlay control works as follows:
+- show the selected overlay type
+```swift
+overlay = .loader
+```
+  
+```swift
+overlay = .alert(message: "Failed fetching data. Please try again.")
+```
+
+- hide the overlay
+```swift
+overlay = nil
+```
 # Features
 
 ## City search
@@ -110,3 +148,21 @@ Cancellation is checked before the read and before publishing its result. A canc
 Both cancellation and read failure show a retry button. Reading is allowed only from `initial`, `loadingCancelled`, or `failure(.persistentStoreLoad)` . An in-progress read cannot start another one. The view's task can also retry when it runs again while one of these retry states is active.
 
 The search bar is enabled after cancellation or failure. Starting a search replaces the retry state with the search state. Because the same enum represents both flows, the retry button is no longer available after that transition. The initial read is not automatically retried from search states.
+
+## Weather Forecast
+
+### Visual representation
+The `ForecastView` presents the forecast module's View. Its content is based on scroll view and is built with several components:
+- `Forecast Header` 
+presents the given city name, the current weather condition icon and description, current temperature
+- `HourlyForecastCard`
+presents a complete weather forecast for the next given number of hours. The content is scrollable horizontally. Each hour forecast is represented by a `Hourly Forecast Column` component. It presents a day, hour, weather condition icon, temperature and huminidity. The hours and days are presented in the device time zone. 
+The time format in API calls is set to `unixtime` (since 1 january 1970)
+```swift
+URLQueryItem(name: "timeformat", value: "unixtime")
+```
+
+and the dates are formatted using the `timeIntervalSince1970` initializer within the application as well
+```swift
+Date(timeIntervalSince1970: TimeInterval(hourly.time[index]))
+```

@@ -17,11 +17,16 @@ class SearchViewModel {
     
     private let cityRepository: CityRepository
     private let storeRepository: PersistentStoreRepository
+    private let weatherRepository: WeatherRepository
 
-    init(repository: CityRepository, storeRepository: PersistentStoreRepository) {
+    init(repository: CityRepository, storeRepository: PersistentStoreRepository, weatherRepository: WeatherRepository) {
         self.cityRepository = repository
         self.storeRepository = storeRepository
+        self.weatherRepository = weatherRepository
     }
+    
+    
+    // MARK: Persistent store
     
     func selectCity(_ city: City, onSuccess: () -> Void) async {
         guard case .results = state else { return }
@@ -36,7 +41,6 @@ class SearchViewModel {
         await save(cities: cities, previousState: previousState, onSuccess: onSuccess)
     }
     
-    /// Handle persistent store
     private func save(cities: [City], previousState: SearchState, onSuccess: () -> Void) async {
         do {
             try Task.checkCancellation()
@@ -78,7 +82,9 @@ class SearchViewModel {
         }
     }
     
-    /// Handle query text change
+    
+    // MARK: Query text change
+    
     func updateQuery(_ text: String) {
         guard canSearch, trigger.query != text else { return }
 
@@ -90,7 +96,9 @@ class SearchViewModel {
         state = query.count >= 3 ? .loadingSearch : .start
     }
 
-    /// Handle manual search action
+    
+    // MARK: Manual search action
+    
     func submitSearch() {
         guard canSearch else { return }
 
@@ -159,5 +167,12 @@ class SearchViewModel {
         default:
             true
         }
+    }
+    
+    
+    // MARK: Weather forecast details
+    
+    func getWeatherForecast(for city: City) async throws -> WeatherForecast {
+        try await weatherRepository.fetchForecast(for: city)
     }
 }

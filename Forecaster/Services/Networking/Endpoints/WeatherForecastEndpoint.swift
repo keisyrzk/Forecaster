@@ -13,7 +13,7 @@ struct WeatherForecastEndpoint: Endpoint {
     var method: HTTPMethod = .get
     let queryItems: [URLQueryItem]
     
-    init(latitude: Double, longitude: Double, hoursCount: Int = 24) {
+    init(latitude: Double, longitude: Double, hoursCount: Int) {
         queryItems = [
             URLQueryItem(name: "latitude", value: "\(latitude)"),
             URLQueryItem(name: "longitude", value: "\(longitude)"),

@@ -10,34 +10,35 @@ import SwiftUI
 struct SearchView: View {
     @State private var viewModel: SearchViewModel
     @State private var searchBarState: SearchBarState = .empty
-
+    
     @FocusState private var isSearchFocused: Bool
-    @State private var navigationPath: [City] = []
-
+    @State private var navigationPath: [ForecastDestination] = []
+    @State private var overlay: AppOverlayType?
+    
     init(viewModel: SearchViewModel) {
         _viewModel = State(initialValue: viewModel)
     }
-
+    
     var body: some View {
         NavigationStack(path: $navigationPath) {
             VStack(alignment: .leading, spacing: 20) {
                 header
-
+                
                 content
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
-
+                
                 searchBar
                     .disabled(!viewModel.canSearch)
             }
             .padding(16)
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background {
-                Color.black.opacity(0.8)
+                BackgroundView(type: .default)
                     .ignoresSafeArea()
             }
             .toolbar(.hidden, for: .navigationBar)
-            .navigationDestination(for: City.self) { city in
-                Text("Forecast for \(city.name)")
+            .navigationDestination(for: ForecastDestination.self) { destination in
+                ForecastView(weatherForecast: destination.forecast, cityName: destination.cityName)
             }
             .task(id: viewModel.trigger) {
                 await viewModel.search()
@@ -46,8 +47,9 @@ struct SearchView: View {
                 await viewModel.loadCities()
             }
         }
+        .appOverlay($overlay)
     }
-
+    
     private var header: some View {
         Text("Weather")
             .font(.system(size: 36, weight: .bold))
@@ -66,7 +68,7 @@ struct SearchView: View {
         .frame(width: 100, height: 40)
         .clipShape(Capsule())
     }
-
+    
     private var savedCities: some View {
         ScrollView {
             LazyVStack(spacing: 14) {
@@ -102,18 +104,18 @@ struct SearchView: View {
             
         case .start:
             savedCities
-
+            
         case .initial, .loadingStore, .loadingSearch, .savingStore:
             LoadingStateView()
-
+            
         case let .results(cities):
             CitiesResultsStateView(cities: cities) { city in
                 selectCity(city)
             }
-
+            
         case .empty:
             EmptyStateView(text: viewModel.trigger.query)
-
+            
         case let .failure(error):
             switch error {
             case .persistentStoreLoad:
@@ -123,7 +125,7 @@ struct SearchView: View {
             }
         }
     }
-
+    
     private var searchBar: some View {
         SearchBarView(
             state: $searchBarState,
@@ -143,13 +145,13 @@ struct SearchView: View {
             }
         }
     }
-
+    
     private func cancelSearch() {
         searchBarState = .empty
         viewModel.updateQuery("")
         isSearchFocused = false
     }
-
+    
     private func selectCity(_ city: City) {
         Task {
             await viewModel.selectCity(city) {
@@ -157,8 +159,20 @@ struct SearchView: View {
             }
         }
     }
-
+    
     private func openForecast(for city: City) {
-        navigationPath.append(city)
+        Task { @MainActor in
+            do {
+                overlay = .loader
+                let forecast = try await viewModel.getWeatherForecast(for: city)
+                try Task.checkCancellation()
+                overlay = nil
+                navigationPath.append(ForecastDestination(cityName: city.name, forecast: forecast))
+            } catch is CancellationError {
+                overlay = .alert(message: "Something went wrong while fething weather forecast. Please try again.")
+            } catch {
+                overlay = .alert(message: "Failed fetching weather forecast. Please try again.")
+            }
+        }
     }
 }

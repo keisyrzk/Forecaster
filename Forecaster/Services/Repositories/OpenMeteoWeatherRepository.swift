@@ -17,7 +17,8 @@ struct OpenMeteoWeatherRepository: WeatherRepository {
     func fetchForecast(for city: City) async throws -> WeatherForecast {
         let endpoint = WeatherForecastEndpoint(
             latitude: city.latitude,
-            longitude: city.longitude
+            longitude: city.longitude,
+            hoursCount: 24
         )
 
         let response: WeatherResponseDTO = try await apiClient.send(

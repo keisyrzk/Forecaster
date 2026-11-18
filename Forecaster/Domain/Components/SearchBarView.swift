@@ -89,7 +89,6 @@ struct SearchBarView: View {
             guard case .valid = state else { return }
             onSearch()
         }
-        .accessibilityIdentifier("citySearchField")
     }
     
     private var clearButton: some View {
@@ -99,7 +98,6 @@ struct SearchBarView: View {
             Image(systemName: "xmark.circle.fill")
                 .foregroundStyle(.white.opacity(0.5))
         }
-        .accessibilityLabel("Clear search text")
     }
     
     private var errorTextView: some View {

@@ -11,5 +11,13 @@ import SwiftUI
 @Observable
 class ForecastViewModel {
     
+    let weatherForecast: WeatherForecast
+    let hourlyForecast: [HourlyForecast]
+    let cityName: String
     
+    init(weatherForecast: WeatherForecast, cityName: String) {
+        self.weatherForecast = weatherForecast
+        hourlyForecast = weatherForecast.hourly.sorted { $0.date < $1.date }
+        self.cityName = cityName
+    }
 }
