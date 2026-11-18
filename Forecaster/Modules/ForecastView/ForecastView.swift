@@ -31,7 +31,8 @@ struct ForecastView: View {
                 ForecastHeader(
                     cityName: viewModel.cityName,
                     temperature: viewModel.weatherForecast.temperature,
-                    condition: viewModel.weatherForecast.condition
+                    condition: viewModel.weatherForecast.condition,
+                    cloudCover: viewModel.weatherForecast.cloudCover
                 )
                 
                 HourlyForecastCard(hourlyForecast: viewModel.hourlyForecast)

@@ -17,6 +17,7 @@ struct ForecastHeader: View {
     let cityName: String
     let temperature: Double
     let condition: WeatherCondition?
+    let cloudCover: Double
 
     var body: some View {
         VStack(spacing: 8) {
@@ -36,6 +37,15 @@ struct ForecastHeader: View {
             Text(condition?.forecastTitle ?? "Conditions unavailable")
                 .font(.title3.weight(.medium))
                 .foregroundStyle(palette.textSecondary)
+            
+            HStack(spacing: 10) {
+                Label("Cloud cover", systemImage: "cloud.fill")
+                    .font(.footnote.weight(.semibold))
+                    .foregroundStyle(palette.textSecondary)
+                
+                Text("\(cloudCover.formatted(.number.precision(.fractionLength(0))))%")
+                    .font(.footnote.weight(.semibold))
+            }
         }
         .multilineTextAlignment(.center)
         .frame(maxWidth: .infinity)
